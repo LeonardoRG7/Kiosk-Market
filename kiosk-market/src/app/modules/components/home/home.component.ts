@@ -5,6 +5,7 @@ import { ProductManagementComponent } from '../product-management/product-manage
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { ViewProductComponent } from '../view-product/view-product.component';
 
 @Component({
   selector: 'app-home',
@@ -58,7 +59,7 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  deleteProduct(id?: string) {
+  deleteProduct(id: number) {
     if (id) {
       this._productService.deleteProduct(id).subscribe((res) => {
         this.ngOnInit();
@@ -67,5 +68,18 @@ export class HomeComponent implements OnInit {
     } else {
       console.error('ID is undefined or null');
     }
+  }
+
+  viewProduct(product: Product) {
+    this._dialog.open(ViewProductComponent, {
+      maxWidth: '65vw',
+      maxHeight: '45vw',
+      width: '100%',
+      height: '100%',
+      panelClass: 'view-product-dialog',
+      data: {
+        product: product,
+      },
+    });
   }
 }
