@@ -21,7 +21,10 @@ import { ViewProductComponent } from '../view-product/view-product.component';
   ],
 })
 export class HomeComponent implements OnInit {
+  isShowCart: boolean = false;
+  totalPrice: number = 0;
   products: Product[] = [];
+  productsCart: Product[] = [];
 
   constructor(
     private _productService: ProductsService,
@@ -81,5 +84,45 @@ export class HomeComponent implements OnInit {
         product: product,
       },
     });
+  }
+
+  addCard(product: Product) {
+    if (product) {
+      const cartItem: Partial<Product> = {
+        name: product.name,
+        price: product.price,
+        description: product.description,
+        quantity: product.quantity,
+      };
+
+      this.productsCart.push(cartItem as Product);
+      this.showCart();
+      this.updateTotalPrice();
+    }
+  }
+
+  showCart() {
+    this.isShowCart = true;
+  }
+
+  hideCart() {
+    this.isShowCart = false;
+  }
+
+  removeCartItem(index: number): void {
+    this.productsCart.splice(index, 1);
+    this.hideCart();
+    this.updateTotalPrice();
+  }
+
+  private updateTotalPrice(): void {
+    this.totalPrice = this.productsCart.reduce(
+      (sum, item) => sum + item.price,
+      0
+    );
+  }
+
+  createNewCard() {
+    this.hideCart();
   }
 }

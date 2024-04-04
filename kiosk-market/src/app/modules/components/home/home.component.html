@@ -1,30 +1,147 @@
-<div class="container home-content" [@fadeInOut]>
-  <div class="product-layout">
-    <div class="product" *ngFor="let product of products">
-      <div class="img-container">
-        <img src="{{ product.image }}" alt="{{ product.name }} image" />
-        <div class="addCart">
-          <i class="fa fa-cart-plus" aria-hidden="true"></i>
-        </div>
+<header>
+  <div
+    class="content-header container p-4 d-flex align-items-center justify-content-between"
+  >
+    <img
+      src="../../../../assets/img/icon.png"
+      alt="Logo"
+      class="brndlogo"
+      style="
+        max-width: 150px;
+        object-fit: cover;
+        height: 100%;
+        max-height: 120px;
+        width: 100%;
+      "
+    />
 
-        <ul class="side-icons">
-          <span (click)="updateProduct(product)">
-            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-          </span>
-          <span (click)="deleteProduct(product.id)">
-            <i class="fa fa-trash-o" aria-hidden="true"></i>
-          </span>
-          <span (click)="viewProduct(product)">
-            <i class="fa fa-eye" aria-hidden="true"></i>
-          </span>
-        </ul>
+    <div id="cartIcz" class="cartIc" (click)="showCart()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="20"
+        height="20"
+        viewBox="0 0 20 20"
+        fill="none"
+      >
+        <path
+          d="M6.66664 4.66667C6.66664 3.78261 7.01783 2.93477 7.64295 2.30964C8.26807 1.68452 9.11592 1.33333 9.99998 1.33333C10.884 1.33333 11.7319 1.68452 12.357 2.30964C12.9821 2.93477 13.3333 3.78261 13.3333 4.66667V5.33333H14.6666V4.66667C14.6666 3.42899 14.175 2.242 13.2998 1.36683C12.4246 0.491665 11.2377 0 9.99998 0C8.7623 0 7.57531 0.491665 6.70014 1.36683C5.82497 2.242 5.33331 3.42899 5.33331 4.66667V5.33333H6.66664V4.66667ZM2.53864 8.44533C2.59311 7.9562 2.82601 7.50432 3.1928 7.17616C3.55958 6.848 4.03448 6.6666 4.52664 6.66667H15.4733C15.9652 6.66692 16.4398 6.84847 16.8063 7.1766C17.1728 7.50473 17.4055 7.95643 17.46 8.44533L18.4986 17.7787C18.5298 18.0583 18.5016 18.3413 18.4159 18.6093C18.3302 18.8773 18.1889 19.1241 18.0012 19.3338C17.8136 19.5434 17.5839 19.7111 17.327 19.8259C17.0702 19.9407 16.792 20 16.5106 20H3.48931C3.20808 19.9999 2.93004 19.9404 2.67335 19.8255C2.41665 19.7106 2.18707 19.5429 1.99959 19.3333C1.81211 19.1237 1.67095 18.8768 1.58532 18.609C1.49969 18.3411 1.47152 18.0582 1.50264 17.7787L2.53864 8.44533Z"
+          fill="white"
+        />
+      </svg>
+      <span id="totalQuantity">{{ productsCart.length }} </span>
+    </div>
+    <div [ngClass]="{ showMiniCart: isShowCart }" class="minicart">
+      <div class="minicartContent">
+        <div class="minicartheader">
+          <span class="orderTXT">Tu Orden</span>
+          <div id="minicartclose" (click)="hideCart()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="25"
+              viewBox="0 0 25 25"
+              fill="none"
+            >
+              <path
+                d="M18.75 6.25L6.25 18.75"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M6.25 6.25L18.75 18.75"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+        <div id="miniCart">
+          <div
+            *ngFor="let item of productsCart; let i = index"
+            class="cart-item"
+          >
+            <p>
+              <span>Producto {{ i }} </span
+              ><span id="dataPrice">${{ item.price | number : "1.2-2" }} </span>
+            </p>
+            <p class="egp2">
+              <span class="boldspn">Nombre: </span>
+              <span id="dataTocEmail">{{ item.name }}</span>
+            </p>
+
+            <p class="egp2">
+              <span class="boldspn">Precio: </span>
+              <span id="dataDate">{{ item.price | currency }} </span>
+            </p>
+            <p class="thnkscart">
+              {{ item.description }}
+            </p>
+            <a
+              class="remove-item-button"
+              style="cursor: pointer"
+              (click)="removeCartItem(i)"
+              >X</a
+            >
+          </div>
+        </div>
+        <div
+          id="emptyCartMessage"
+          *ngIf="productsCart && productsCart.length === 0"
+        >
+          Tu carrito esta vacio.
+        </div>
+        <div
+          class="totalCartPrice"
+          id="ordrTXT"
+          *ngIf="productsCart && productsCart.length > 0"
+        >
+          <span class="cartttl">Total</span
+          ><span id="totalAmount">${{ totalPrice | number : "1.2-2" }}</span>
+        </div>
+        <a class="addanothercart" id="cloasecart" (click)="createNewCard()">{{
+          productsCart.length === 0
+            ? "Agregar un producto"
+            : "Agregar otro producto"
+        }}</a>
+        <button *ngIf="productsCart.length > 0" class="addtocart">Pagar</button>
       </div>
-      <div class="bottom">
-        <p>{{ product.name }}</p>
-        <div class="price">
-          <span>{{ product.price | currency }} </span>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="container home-content">
+    <div class="product-layout">
+      <div class="product" *ngFor="let product of products">
+        <div class="img-container">
+          <img src="{{ product.image }}" alt="{{ product.name }} image" />
+          <div class="addCart" (click)="addCard(product)">
+            <i class="fa fa-cart-plus" aria-hidden="true"></i>
+          </div>
+
+          <ul class="side-icons">
+            <span (click)="updateProduct(product)">
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            </span>
+            <span (click)="deleteProduct(product.id)">
+              <i class="fa fa-trash-o" aria-hidden="true"></i>
+            </span>
+            <span (click)="viewProduct(product)">
+              <i class="fa fa-eye" aria-hidden="true"></i>
+            </span>
+          </ul>
+        </div>
+        <div class="bottom">
+          <p>{{ product.name }}</p>
+          <div class="price">
+            <span>{{ product.price | currency }} </span>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+</section>
