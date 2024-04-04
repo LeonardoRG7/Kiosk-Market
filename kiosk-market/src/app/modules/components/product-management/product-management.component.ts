@@ -2,7 +2,6 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Product } from 'src/app/core/interfaces/product';
 import { ProductsService } from 'src/app/core/services/products.service';
@@ -24,7 +23,6 @@ export class ProductManagementComponent implements OnInit {
     private _fb: FormBuilder,
     private _toastr: ToastrService,
     private _productsService: ProductsService,
-    private _router: Router,
     public dialogRef: MatDialogRef<ProductManagementComponent>,
     @Inject(MAT_DIALOG_DATA)
     public product: {
@@ -64,7 +62,6 @@ export class ProductManagementComponent implements OnInit {
     if (this.productId) {
       this._productsService.updateProduct(this.productId, PRODUCT).subscribe(
         (data) => {
-          this._router.navigate(['/home']);
           this.closeModal();
           this._toastr.info('Producto actualizado!', 'Correctamente!');
         },
@@ -76,7 +73,6 @@ export class ProductManagementComponent implements OnInit {
       if (!this.productForm.invalid) {
         this._productsService.createProduct(PRODUCT).subscribe(
           (data) => {
-            this._router.navigate(['/home']);
             this.closeModal();
             this._toastr.success('Producto creado!', 'Correctamente');
           },

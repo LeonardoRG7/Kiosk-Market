@@ -47,21 +47,23 @@ export class HomeComponent implements OnInit {
     });
   }
   createProduct() {
-    this._dialog.open(ProductManagementComponent, {
-      maxWidth: '30vw',
-      width: '100%',
+    const dialogRef = this._dialog.open(ProductManagementComponent, {
+      width: 'auto',
       height: 'auto',
       panelClass: 'create-product-dialog',
       data: {
         isUpdate: false,
       },
     });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.getProducts(); // Actualizar la lista de productos después de cerrar el modal
+    });
   }
 
   updateProduct(product: Product) {
-    this._dialog.open(ProductManagementComponent, {
-      maxWidth: '30vw',
-      width: '100%',
+    const dialogRef = this._dialog.open(ProductManagementComponent, {
+      width: 'auto',
       height: 'auto',
       panelClass: 'edit-product-dialog',
       data: {
@@ -69,6 +71,10 @@ export class HomeComponent implements OnInit {
         productId: product?.id,
         isUpdate: true,
       },
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.getProducts(); // Actualizar la lista de productos después de cerrar el modal
     });
   }
 
@@ -101,6 +107,7 @@ export class HomeComponent implements OnInit {
           price: product.price,
           description: product.description,
           quantity: 1,
+          totalQuantity: product.quantity,
         };
         this.productsCart.push(cartItem as Product);
       }

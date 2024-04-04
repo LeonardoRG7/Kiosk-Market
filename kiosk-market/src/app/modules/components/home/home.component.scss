@@ -153,9 +153,11 @@ header {
       font-family: Poppins;
       font-size: 14px;
       font-style: normal;
-      font-weight: 400;
       line-height: 150%;
       margin: 0;
+      font-weight: 400;
+      width: 100%;
+      word-break: break-word;
     }
 
     .cart-item {
@@ -267,7 +269,7 @@ header {
       display: flex;
       color: #fff !important;
       font-family: Poppins;
-      background-color: #2b2a2a;
+      background-color: #2148c0;
       font-size: 16px;
       font-style: normal;
       font-weight: 600;

@@ -37,3 +37,9 @@
     border-radius: 20px !important;
   }
 }
+
+@media (max-width: 768px) {
+  .preview-image {
+    width: 5.5rem !important;
+  }
+}
