@@ -76,18 +76,24 @@
       <input
         type="text"
         class="form-control mb-3"
+        [(ngModel)]="username"
+        autocomplete="off"
         id="exampleFormControlInput1"
         placeholder="Nombre usuario"
       />
       <input
         type="password"
         id="inputPassword5"
+        [(ngModel)]="password"
+        autocomplete="off"
         class="form-control mb-4"
         aria-describedby="passwordHelpBlock"
         placeholder="Contraseña"
       />
 
-      <button type="button" class="btn btn-submit mb-3">Iniciar sesión</button>
+      <button type="button" class="btn btn-submit mb-3" (click)="login()">
+        Iniciar sesión
+      </button>
 
       <div class="d-flex align-items-center justify-content-between">
         <div class="form-check mb-0">

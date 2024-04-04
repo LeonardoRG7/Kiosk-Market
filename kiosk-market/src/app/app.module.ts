@@ -15,9 +15,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './modules/auth/login/login.component';
 import { ErrorPageComponent } from './modules/error/error-page/error-page.component';
+import { HomeComponent } from './modules/components/home/home.component';
+import { ProductManagementComponent } from './modules/components/product-management/product-management.component';
+import { ViewProductComponent } from './modules/components/view-product/view-product.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, ErrorPageComponent],
+  declarations: [AppComponent, LoginComponent, ErrorPageComponent, HomeComponent, ProductManagementComponent, ViewProductComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

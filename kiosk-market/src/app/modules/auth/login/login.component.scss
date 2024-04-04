@@ -1,7 +1,6 @@
 .login-content {
   background-color: #2148c0;
   position: relative;
-  overflow: hidden;
 
   .card-content {
     display: flex;
@@ -70,18 +69,33 @@
       .form-check-input {
         padding: 5px;
       }
+
+      .form-check-label {
+        a {
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          color: #ffffff;
+        }
+      }
     }
   }
 }
 
-.card-content .card .form-check-label,
-a {
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  color: #ffffff;
-}
+::ng-deep {
+  footer {
+    background-color: #2148c0 !important;
 
-.card-content .card a {
-  text-decoration: none;
+    .footer-copy {
+      color: #ffff !important;
+    }
+
+    .social-links {
+      a {
+        &:hover {
+          color: #fff !important;
+        }
+      }
+    }
+  }
 }
