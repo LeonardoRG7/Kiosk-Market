@@ -1,0 +1,36 @@
+.error-page {
+  background-color: #2148c0;
+}
+
+.card-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.title,
+.text,
+.subtitle,
+a {
+  color: #fff;
+}
+
+.title {
+  font-size: 12rem;
+  margin-right: 2rem;
+}
+
+.subtitle {
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.text {
+  font-size: 1.1rem;
+}
+
+a {
+  text-decoration: none;
+}

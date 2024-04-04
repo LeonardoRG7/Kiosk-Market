@@ -1,0 +1,13 @@
+@import "~ngx-toastr/toastr";
+
+* {
+  box-sizing: content-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  scroll-behavior: smooth;
+  font-family: "Poppins";
+  background: #e8f0fe;
+}

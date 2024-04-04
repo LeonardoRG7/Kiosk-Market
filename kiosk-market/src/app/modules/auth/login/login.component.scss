@@ -1,0 +1,87 @@
+.login-content {
+  background-color: #2148c0;
+  position: relative;
+  overflow: hidden;
+
+  .card-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+
+    .card {
+      width: 500px;
+      height: auto;
+      padding: 2rem;
+      border: 0;
+      border-radius: 20px;
+      background-color: #6787e8;
+
+      img {
+        width: 8rem;
+        position: relative;
+        left: -6px;
+      }
+
+      .ttile {
+        font-size: 1.1rem;
+        font-weight: 600;
+      }
+
+      .subtitle {
+        letter-spacing: -0.2px;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 1rem;
+        color: #ffffff;
+      }
+
+      .form-control {
+        padding: 12px 30px;
+        box-sizing: border-box;
+        border: 1px solid #ffffff;
+        border-radius: 8px;
+        background: transparent !important;
+        color: #ffffff;
+
+        &::placeholder {
+          color: #ffffff;
+        }
+
+        &:focus {
+          background-color: transparent;
+          outline: none;
+          border: 2px solid #ffffff;
+        }
+      }
+
+      .btn-submit {
+        color: #ffff;
+        height: 50px;
+        background: #2148c0;
+        border-radius: 8px;
+        font-size: 1.2rem;
+
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+
+      .form-check-input {
+        padding: 5px;
+      }
+    }
+  }
+}
+
+.card-content .card .form-check-label,
+a {
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.card-content .card a {
+  text-decoration: none;
+}
