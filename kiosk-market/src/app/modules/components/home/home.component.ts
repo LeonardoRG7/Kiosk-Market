@@ -4,21 +4,17 @@ import { ProductsService } from 'src/app/core/services/products.service';
 import { ProductManagementComponent } from '../product-management/product-management.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { animate, style, transition, trigger } from '@angular/animations';
 import { ViewProductComponent } from '../view-product/view-product.component';
+import { Router } from '@angular/router';
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
+
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('1s', style({ opacity: 1 })),
-      ]),
-    ]),
-  ],
 })
 export class HomeComponent implements OnInit {
   isShowCart: boolean = false;
@@ -29,7 +25,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private _productService: ProductsService,
     private _dialog: MatDialog,
-    private _toastr: ToastrService
+    private _toastr: ToastrService,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -124,5 +121,63 @@ export class HomeComponent implements OnInit {
 
   createNewCard() {
     this.hideCart();
+  }
+
+  logout() {
+    sessionStorage.removeItem('token');
+    this._router.navigate(['/']);
+    this._toastr.success('Sesión cerrada correctamente', 'Éxito');
+  }
+
+  generatePdf() {
+    const documentDefinition = {
+      content: [
+        { text: 'Factura', style: 'header' },
+        {
+          table: {
+            headerRows: 1,
+            widths: ['*', '*', '*', '*'],
+            body: [
+              [
+                { text: 'Nombre', style: 'tableHeader' },
+                { text: 'Descripción', style: 'tableHeader' },
+                { text: 'Cantidad', style: 'tableHeader' },
+                { text: 'Precio', style: 'tableHeader' },
+              ],
+              ...this.productsCart.map((product) => [
+                product.name,
+                product.description,
+                product.quantity,
+                product.price,
+              ]),
+              [
+                { text: 'Total a pagar', colSpan: 3, alignment: 'right' },
+                '',
+                '',
+                this.totalPrice,
+              ],
+            ],
+          },
+        },
+        {
+          text: '© RiascosDEV.me All right reserved\nMade with ❤️ in Colombia',
+          style: 'footer',
+        },
+      ],
+      styles: {
+        header: {
+          fontSize: 18,
+          bold: true,
+          margin: [0, 0, 0, 10],
+        },
+        footer: {
+          fontSize: 10,
+          alignment: 'center',
+          margin: [0, 30, 0, 0],
+        },
+      },
+    };
+
+    pdfMake.createPdf(documentDefinition).open();
   }
 }

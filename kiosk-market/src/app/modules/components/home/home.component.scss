@@ -1,11 +1,24 @@
 header {
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px #2148c045;
   z-index: 999;
   position: sticky;
   top: 0;
   background: #e8f0fe;
 
   .content-header {
+    .logout {
+      border-radius: 30px;
+      background: #2148c0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 15px;
+      gap: 4px;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
     .cartIc {
       border-radius: 30px;
       background: #2148c0;
@@ -252,6 +265,9 @@ header {
 section {
   background-color: #e8f0fe;
   .home-content {
+    .title {
+      font-weight: 700;
+    }
     .product-layout {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));

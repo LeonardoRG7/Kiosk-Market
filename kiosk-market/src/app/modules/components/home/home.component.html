@@ -15,99 +15,135 @@
       "
     />
 
-    <div id="cartIcz" class="cartIc" (click)="showCart()">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 20 20"
-        fill="none"
-      >
-        <path
-          d="M6.66664 4.66667C6.66664 3.78261 7.01783 2.93477 7.64295 2.30964C8.26807 1.68452 9.11592 1.33333 9.99998 1.33333C10.884 1.33333 11.7319 1.68452 12.357 2.30964C12.9821 2.93477 13.3333 3.78261 13.3333 4.66667V5.33333H14.6666V4.66667C14.6666 3.42899 14.175 2.242 13.2998 1.36683C12.4246 0.491665 11.2377 0 9.99998 0C8.7623 0 7.57531 0.491665 6.70014 1.36683C5.82497 2.242 5.33331 3.42899 5.33331 4.66667V5.33333H6.66664V4.66667ZM2.53864 8.44533C2.59311 7.9562 2.82601 7.50432 3.1928 7.17616C3.55958 6.848 4.03448 6.6666 4.52664 6.66667H15.4733C15.9652 6.66692 16.4398 6.84847 16.8063 7.1766C17.1728 7.50473 17.4055 7.95643 17.46 8.44533L18.4986 17.7787C18.5298 18.0583 18.5016 18.3413 18.4159 18.6093C18.3302 18.8773 18.1889 19.1241 18.0012 19.3338C17.8136 19.5434 17.5839 19.7111 17.327 19.8259C17.0702 19.9407 16.792 20 16.5106 20H3.48931C3.20808 19.9999 2.93004 19.9404 2.67335 19.8255C2.41665 19.7106 2.18707 19.5429 1.99959 19.3333C1.81211 19.1237 1.67095 18.8768 1.58532 18.609C1.49969 18.3411 1.47152 18.0582 1.50264 17.7787L2.53864 8.44533Z"
-          fill="white"
-        />
-      </svg>
-      <span id="totalQuantity">{{ productsCart.length }} </span>
-    </div>
-    <div [ngClass]="{ showMiniCart: isShowCart }" class="minicart">
-      <div class="minicartContent">
-        <div class="minicartheader">
-          <span class="orderTXT">Tu Orden</span>
-          <div id="minicartclose" (click)="hideCart()">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="25"
-              height="25"
-              viewBox="0 0 25 25"
-              fill="none"
-            >
-              <path
-                d="M18.75 6.25L6.25 18.75"
-                stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M6.25 6.25L18.75 18.75"
-                stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-          </div>
-        </div>
-        <div id="miniCart">
-          <div
-            *ngFor="let item of productsCart; let i = index"
-            class="cart-item"
-          >
-            <p>
-              <span>Producto {{ i }} </span
-              ><span id="dataPrice">${{ item.price | number : "1.2-2" }} </span>
-            </p>
-            <p class="egp2">
-              <span class="boldspn">Nombre: </span>
-              <span id="dataTocEmail">{{ item.name }}</span>
-            </p>
+    <div class="d-flex align-items-center" style="gap: 1rem">
+      <div id="cartIcz" class="cartIc" (click)="showCart()">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 20 20"
+          fill="none"
+        >
+          <path
+            d="M6.66664 4.66667C6.66664 3.78261 7.01783 2.93477 7.64295 2.30964C8.26807 1.68452 9.11592 1.33333 9.99998 1.33333C10.884 1.33333 11.7319 1.68452 12.357 2.30964C12.9821 2.93477 13.3333 3.78261 13.3333 4.66667V5.33333H14.6666V4.66667C14.6666 3.42899 14.175 2.242 13.2998 1.36683C12.4246 0.491665 11.2377 0 9.99998 0C8.7623 0 7.57531 0.491665 6.70014 1.36683C5.82497 2.242 5.33331 3.42899 5.33331 4.66667V5.33333H6.66664V4.66667ZM2.53864 8.44533C2.59311 7.9562 2.82601 7.50432 3.1928 7.17616C3.55958 6.848 4.03448 6.6666 4.52664 6.66667H15.4733C15.9652 6.66692 16.4398 6.84847 16.8063 7.1766C17.1728 7.50473 17.4055 7.95643 17.46 8.44533L18.4986 17.7787C18.5298 18.0583 18.5016 18.3413 18.4159 18.6093C18.3302 18.8773 18.1889 19.1241 18.0012 19.3338C17.8136 19.5434 17.5839 19.7111 17.327 19.8259C17.0702 19.9407 16.792 20 16.5106 20H3.48931C3.20808 19.9999 2.93004 19.9404 2.67335 19.8255C2.41665 19.7106 2.18707 19.5429 1.99959 19.3333C1.81211 19.1237 1.67095 18.8768 1.58532 18.609C1.49969 18.3411 1.47152 18.0582 1.50264 17.7787L2.53864 8.44533Z"
+            fill="white"
+          />
+        </svg>
+        <span id="totalQuantity">{{ productsCart.length }} </span>
+      </div>
 
-            <p class="egp2">
-              <span class="boldspn">Precio: </span>
-              <span id="dataDate">{{ item.price | currency }} </span>
-            </p>
-            <p class="thnkscart">
-              {{ item.description }}
-            </p>
-            <a
-              class="remove-item-button"
-              style="cursor: pointer"
-              (click)="removeCartItem(i)"
-              >X</a
-            >
+      <div class="logout" (click)="logout()">
+        <svg
+          _ngcontent-eky-c85=""
+          _ngcontent-qkk-c1=""
+          fill="none"
+          height="48"
+          viewBox="0 0 30 31"
+          width="31"
+          xmlns="http://www.w3.org/2000/svg"
+          class="ng-tns-c85-0"
+        >
+          <path
+            _ngcontent-eky-c85=""
+            _ngcontent-qkk-c1=""
+            d="M21.25 10.5L19.5 12.25L21.5 14.25H11.25V16.75H21.5L19.5 18.75L21.25 20.5L26.25 15.5L21.25 10.5ZM6.25 6.75H15V4.25H6.25C4.875 4.25 3.75 5.375 3.75 6.75V24.25C3.75 25.625 4.875 26.75 6.25 26.75H15V24.25H6.25V6.75Z"
+            fill="#fff"
+            class="ng-tns-c85-0"
+          ></path>
+        </svg>
+        Salir
+      </div>
+      <div [ngClass]="{ showMiniCart: isShowCart }" class="minicart">
+        <div class="minicartContent">
+          <div class="minicartheader">
+            <span class="orderTXT">Tu Orden</span>
+            <div id="minicartclose" (click)="hideCart()">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                viewBox="0 0 25 25"
+                fill="none"
+              >
+                <path
+                  d="M18.75 6.25L6.25 18.75"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M6.25 6.25L18.75 18.75"
+                  stroke="white"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </div>
           </div>
+          <div id="miniCart">
+            <div
+              *ngFor="let item of productsCart; let i = index"
+              class="cart-item"
+            >
+              <p>
+                <span>Producto {{ i }} </span
+                ><span id="dataPrice"
+                  >${{ item.price | number : "1.2-2" }}
+                </span>
+              </p>
+              <p class="egp2">
+                <span class="boldspn">Nombre: </span>
+                <span id="dataTocEmail">{{ item.name }}</span>
+              </p>
+
+              <p class="egp2">
+                <span class="boldspn">Precio: </span>
+                <span id="dataDate">{{ item.price | currency }} </span>
+              </p>
+              <p class="egp2">
+                <span class="boldspn">Cantidad: </span>
+                <span id="dataDate">{{ item.quantity }} </span>
+              </p>
+              <p class="thnkscart">
+                {{ item.description }}
+              </p>
+              <a
+                class="remove-item-button"
+                style="cursor: pointer"
+                (click)="removeCartItem(i)"
+                >X</a
+              >
+            </div>
+          </div>
+          <div
+            id="emptyCartMessage"
+            *ngIf="productsCart && productsCart.length === 0"
+          >
+            Tu carrito esta vacio.
+          </div>
+          <div
+            class="totalCartPrice"
+            id="ordrTXT"
+            *ngIf="productsCart && productsCart.length > 0"
+          >
+            <span class="cartttl">Total</span
+            ><span id="totalAmount">${{ totalPrice | number : "1.2-2" }}</span>
+          </div>
+          <a class="addanothercart" id="cloasecart" (click)="createNewCard()">{{
+            productsCart.length === 0
+              ? "Agregar un producto"
+              : "Agregar otro producto"
+          }}</a>
+          <button
+            *ngIf="productsCart.length > 0"
+            (click)="generatePdf()"
+            class="addtocart"
+          >
+            Pagar
+          </button>
         </div>
-        <div
-          id="emptyCartMessage"
-          *ngIf="productsCart && productsCart.length === 0"
-        >
-          Tu carrito esta vacio.
-        </div>
-        <div
-          class="totalCartPrice"
-          id="ordrTXT"
-          *ngIf="productsCart && productsCart.length > 0"
-        >
-          <span class="cartttl">Total</span
-          ><span id="totalAmount">${{ totalPrice | number : "1.2-2" }}</span>
-        </div>
-        <a class="addanothercart" id="cloasecart" (click)="createNewCard()">{{
-          productsCart.length === 0
-            ? "Agregar un producto"
-            : "Agregar otro producto"
-        }}</a>
-        <button *ngIf="productsCart.length > 0" class="addtocart">Pagar</button>
       </div>
     </div>
   </div>
@@ -115,6 +151,7 @@
 
 <section>
   <div class="container home-content">
+    <h1 class="title py-5 text-center">Productos</h1>
     <div class="product-layout">
       <div class="product" *ngFor="let product of products">
         <div class="img-container">
