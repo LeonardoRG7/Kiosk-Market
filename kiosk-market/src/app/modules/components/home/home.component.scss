@@ -180,6 +180,29 @@ header {
       margin-bottom: 6px !important;
     }
 
+    .value-quantity {
+      font-size: 1rem;
+      padding: 0 0.2rem;
+      font-weight: 900;
+    }
+
+    .quantity-btn {
+      padding: 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      cursor: pointer;
+      background-color: #2148c0;
+      border: 0;
+      outline: 0;
+      font-size: 1rem;
+      height: 20px;
+      width: 20px;
+      margin: 0 0.2rem;
+      color: #ffff;
+    }
+
     span.boldspn {
       color: #1a1a1a;
       font-weight: 600;
@@ -270,7 +293,7 @@ section {
     }
     .product-layout {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
       gap: 3rem;
       max-width: 130rem;
       margin: 0 auto;
@@ -278,6 +301,9 @@ section {
 
       .product {
         overflow: hidden;
+        background: #fff;
+        padding: 1rem 1.5rem 3rem 1.5rem;
+        border-radius: 20px;
 
         .img-container {
           position: relative;
@@ -292,23 +318,47 @@ section {
         }
 
         .bottom {
-          padding: 1rem;
+          padding: 1rem 0;
           text-align: center;
 
-          a {
-            margin-bottom: 1rem;
-            font-weight: inherit;
-            font-size: 1.5rem;
-
-            &:hover {
-              color: red;
-            }
+          p {
+            font-family: "Poppins";
+            font-style: normal;
+            font-weight: 500;
+            text-align: left;
+            color: #000000;
+            font-size: 0.9rem;
+            line-height: 20px;
+            margin: 0;
           }
 
           span {
-            color: red;
-            font-size: 1.8rem;
+            font-family: "Poppins";
+            font-style: normal;
+            font-size: 1rem;
+            line-height: 8px;
+            text-align: center;
+            color: #2148c0;
+            font-weight: 600;
           }
+        }
+
+        .description {
+          font-size: 14px;
+          line-height: 20px;
+          color: #3c3939;
+          font-weight: 400;
+        }
+
+        .btn-add-cart {
+          width: 100%;
+          background: #2148c0;
+          border-radius: 10px;
+          outline: 0;
+          border: 0;
+          padding: 0.7rem 0;
+          font-size: 1.1rem;
+          color: #fff;
         }
 
         &:hover .addCart {
@@ -335,11 +385,21 @@ section {
           transition: all 300ms ease-in-out;
         }
 
+        .quantity-value {
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-size: 1.2rem;
+          font-weight: 600;
+          color: #2148c0;
+          text-shadow: 0 0 1.5px #2148c0;
+        }
+
         .side-icons {
           position: absolute;
           right: 0;
           top: 30%;
-          transform: translate(80%, -50%);
+          transform: translate(150%, -30%);
           display: flex;
           flex-direction: column;
           padding: 1rem;
@@ -365,7 +425,7 @@ section {
         }
 
         &:hover .side-icons {
-          transform: translate(0%, -50%);
+          transform: translate(35%, -30%);
         }
       }
     }

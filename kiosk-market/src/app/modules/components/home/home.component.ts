@@ -32,6 +32,15 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this._productService.getProducts().subscribe((res) => {
       this.products = res;
+
+      this.products.forEach((product) => {
+        if (product.quantity <= 10) {
+          this._toastr.info(
+            `La cantidad de ${product.name} es baja`,
+            'Cantidad baja'
+          );
+        }
+      });
     });
   }
 
@@ -70,32 +79,43 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  viewProduct(product: Product) {
-    this._dialog.open(ViewProductComponent, {
-      maxWidth: '65vw',
-      maxHeight: '45vw',
-      width: '100%',
-      height: '100%',
-      panelClass: 'view-product-dialog',
-      data: {
-        product: product,
-      },
-    });
-  }
-
   addCard(product: Product) {
     if (product) {
-      const cartItem: Partial<Product> = {
-        name: product.name,
-        price: product.price,
-        description: product.description,
-        quantity: product.quantity,
-      };
+      // Buscar si el producto ya está en el carrito
+      const existingProduct = this.productsCart.find(
+        (item) => item.id === product.id
+      );
 
-      this.productsCart.push(cartItem as Product);
+      if (existingProduct) {
+        // Si el producto ya existe, actualizar la cantidad sumando 1
+        existingProduct.quantity++;
+      } else {
+        // Si el producto no existe, añadirlo al carrito con cantidad 1
+        const cartItem: Partial<Product> = {
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          description: product.description,
+          quantity: 1,
+        };
+        this.productsCart.push(cartItem as Product);
+      }
+
       this.showCart();
       this.updateTotalPrice();
     }
+  }
+
+  decrementQuantity(item: Product): void {
+    if (item.quantity > 1) {
+      item.quantity--;
+      this.updateTotalPrice();
+    }
+  }
+
+  incrementQuantity(item: Product): void {
+    item.quantity++;
+    this.updateTotalPrice();
   }
 
   showCart() {
@@ -112,9 +132,9 @@ export class HomeComponent implements OnInit {
     this.updateTotalPrice();
   }
 
-  private updateTotalPrice(): void {
+  updateTotalPrice(): void {
     this.totalPrice = this.productsCart.reduce(
-      (sum, item) => sum + item.price,
+      (sum, item) => sum + item.price * item.quantity,
       0
     );
   }
@@ -130,9 +150,16 @@ export class HomeComponent implements OnInit {
   }
 
   generatePdf() {
+    // Actualiza el subtotal
+    this.updateTotalPrice();
+
+    const subtotal = this.totalPrice;
+    const iva = subtotal * 0.19;
+    const totalWithIVA = subtotal + iva;
+
     const documentDefinition = {
       content: [
-        { text: 'Factura', style: 'header' },
+        { text: 'Factura', style: 'header', margin: [0, 20, 0, 10] },
         {
           table: {
             headerRows: 1,
@@ -148,16 +175,33 @@ export class HomeComponent implements OnInit {
                 product.name,
                 product.description,
                 product.quantity,
-                product.price,
+                { text: `$${product.price}`, alignment: 'right' },
               ]),
               [
-                { text: 'Total a pagar', colSpan: 3, alignment: 'right' },
+                { text: 'Subtotal', colSpan: 3, alignment: 'right' },
                 '',
                 '',
-                this.totalPrice,
+                { text: `$${subtotal.toFixed(2)}`, alignment: 'right' },
+              ],
+              [
+                { text: 'IVA (19%)', colSpan: 3, alignment: 'right' },
+                '',
+                '',
+                { text: `$${iva.toFixed(2)}`, alignment: 'right' },
+              ],
+              [
+                {
+                  text: 'Total a pagar (IVA incluido)',
+                  colSpan: 3,
+                  alignment: 'right',
+                },
+                '',
+                '',
+                { text: `$${totalWithIVA.toFixed(2)}`, alignment: 'right' },
               ],
             ],
           },
+          margin: [0, 20, 0, 0],
         },
         {
           text: '© RiascosDEV.me All right reserved\nMade with ❤️ in Colombia',
@@ -174,6 +218,11 @@ export class HomeComponent implements OnInit {
           fontSize: 10,
           alignment: 'center',
           margin: [0, 30, 0, 0],
+        },
+        tableHeader: {
+          bold: true,
+          fontSize: 13,
+          color: 'black',
         },
       },
     };
