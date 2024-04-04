@@ -157,7 +157,15 @@
 
 <section>
   <div class="container home-content">
-    <h1 class="title py-5 text-center">Productos</h1>
+    <div
+      class="d-flex align-items-center justify-content-between py-5 container"
+    >
+      <h1 class="title">Productos</h1>
+      <button class="create-product" (click)="createProduct()">
+        Crear Producto
+      </button>
+    </div>
+
     <div class="product-layout">
       <div class="product" *ngFor="let product of products">
         <div class="img-container">

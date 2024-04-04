@@ -4,7 +4,6 @@ import { ProductsService } from 'src/app/core/services/products.service';
 import { ProductManagementComponent } from '../product-management/product-management.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
-import { ViewProductComponent } from '../view-product/view-product.component';
 import { Router } from '@angular/router';
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -30,6 +29,10 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getProducts();
+  }
+
+  getProducts(): void {
     this._productService.getProducts().subscribe((res) => {
       this.products = res;
 
@@ -43,27 +46,30 @@ export class HomeComponent implements OnInit {
       });
     });
   }
-
   createProduct() {
     this._dialog.open(ProductManagementComponent, {
-      maxWidth: '35vw',
-      maxHeight: '45vw',
+      maxWidth: '30vw',
+      maxHeight: '30vw',
       width: '100%',
       height: '100%',
       panelClass: 'create-product-dialog',
+      data: {
+        isUpdate: false,
+      },
     });
   }
 
   updateProduct(product: Product) {
     this._dialog.open(ProductManagementComponent, {
-      maxWidth: '35vw',
-      maxHeight: '45vw',
+      maxWidth: '30vw',
+      maxHeight: '30vw',
       width: '100%',
       height: '100%',
       panelClass: 'edit-product-dialog',
       data: {
         product: product,
         productId: product?.id,
+        isUpdate: true,
       },
     });
   }
