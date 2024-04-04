@@ -17,6 +17,7 @@ export class ProductManagementComponent implements OnInit {
   productForm: FormGroup;
   productId: number | null;
   nameTitle: string = 'Crear un nuevo producto';
+  nameButton: string = 'Crear';
 
   constructor(
     private sanitizer: DomSanitizer,
@@ -37,14 +38,13 @@ export class ProductManagementComponent implements OnInit {
       price: ['', Validators.required],
       description: ['', Validators.required],
       quantity: ['', Validators.required],
-      image: [''],
+      image: [],
     });
 
     this.productId = this.product ? this.product.productId : null;
   }
 
   ngOnInit(): void {
-    console.log(this.product.isUpdate);
     this.isUpdate();
   }
 
@@ -54,7 +54,11 @@ export class ProductManagementComponent implements OnInit {
       price: this.productForm.get('price')?.value,
       description: this.productForm.get('description')?.value,
       quantity: this.productForm.get('quantity')?.value,
-      image: this.previewImg,
+      image: this.productId
+        ? this.previewImg
+          ? this.previewImg
+          : this.product.product.image
+        : this.previewImg,
     };
 
     if (this.productId) {
@@ -87,16 +91,17 @@ export class ProductManagementComponent implements OnInit {
   }
 
   isUpdate() {
-    if (this.productId !== null) {
+    if (this.productId !== null && this.product && this.product.product) {
       this.nameTitle = 'Editar Producto';
+      this.nameButton = 'Editar';
 
       const product = this.product.product;
 
       this.productForm.patchValue({
-        name: product.name,
-        price: product.price,
-        description: product.description,
-        quantity: product.quantity,
+        name: product.name || '',
+        price: product.price || '',
+        description: product.description || '',
+        quantity: product.quantity || '',
       });
     }
   }

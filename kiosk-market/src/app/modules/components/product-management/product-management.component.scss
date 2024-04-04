@@ -1,0 +1,39 @@
+.form-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  .btn {
+    width: 8rem;
+    outline: none;
+    border: 0;
+  }
+
+  .btn-primary {
+    background-color: #2148c0 !important;
+  }
+
+  .btn-secondary {
+    background-color: #2b2a2a !important;
+  }
+
+  .preview-image {
+    width: 9rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+}
+
+::ng-deep {
+  .mat-dialog-container {
+    border-radius: 20px !important;
+  }
+}

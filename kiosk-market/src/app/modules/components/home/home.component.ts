@@ -49,9 +49,8 @@ export class HomeComponent implements OnInit {
   createProduct() {
     this._dialog.open(ProductManagementComponent, {
       maxWidth: '30vw',
-      maxHeight: '30vw',
       width: '100%',
-      height: '100%',
+      height: 'auto',
       panelClass: 'create-product-dialog',
       data: {
         isUpdate: false,
@@ -62,9 +61,8 @@ export class HomeComponent implements OnInit {
   updateProduct(product: Product) {
     this._dialog.open(ProductManagementComponent, {
       maxWidth: '30vw',
-      maxHeight: '30vw',
       width: '100%',
-      height: '100%',
+      height: 'auto',
       panelClass: 'edit-product-dialog',
       data: {
         product: product,
