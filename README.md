@@ -18,7 +18,7 @@ Puedes ejecutar el servicio de API localmente utilizando el siguiente comando:
 
 Copy code
 **json-server .\db.json**
-Alternativamente, puedes acceder a la versión de producción de la aplicación en **https://kioskoo-market.vercel.app/home** .
+Alternativamente, puedes acceder a la versión de producción de la aplicación en **https://kioskoo-market-green.vercel.app/** .
 
 **Características**
 
