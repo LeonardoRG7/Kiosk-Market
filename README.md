@@ -1,4 +1,5 @@
 #README de Kiosko Marke
+
 Este proyecto realizado en Angular 14 utiliza json-server junto con db.json para el manejo de la API y la base de datos. La base de datos contiene dos conjuntos principales de datos: login y products.
 
 #Credenciales de Inicio de Sesión
