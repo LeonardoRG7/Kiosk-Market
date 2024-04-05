@@ -5,8 +5,8 @@ Este proyecto realizado en Angular 14 utiliza json-server junto con db.json para
 **Credenciales de Inicio de Sesión**
 Para acceder a la aplicación, puedes iniciar sesión utilizando cualquiera de los siguientes conjuntos de credenciales:
 
-**Administrador:**
-Usuario: admin
+**Test:**
+Usuario: test
 Contraseña: 12345
 
 **Desarrollador:**
