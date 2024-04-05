@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:3000',
+  apiUrl: 'https://api-kiosko.onrender.com', //como se subio a hosting la api se usa ese en local si usar este:  'http://localhost:3000',
 };
 
 /*

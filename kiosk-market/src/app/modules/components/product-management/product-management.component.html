@@ -36,7 +36,7 @@
 
   <mat-form-field class="full-width">
     <mat-label>Descripcion</mat-label>
-    <input matInput formControlName="description" required maxlength="70" />
+    <input matInput formControlName="description" required maxlength="100" />
     <mat-error
       *ngIf="
         productForm.get('description')?.invalid &&
