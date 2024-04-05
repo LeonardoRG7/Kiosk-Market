@@ -57,7 +57,7 @@
         <div class="minicartContent">
           <div class="minicartheader">
             <span class="orderTXT">Tu Orden</span>
-            <div id="minicartclose" (click)="hideCart()">
+            <div id="minicartclose" (click)="hideCart()" *ngIf="!isLoading">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
@@ -104,12 +104,17 @@
               </p>
               <p class="egp2 d-flex">
                 <span class="boldspn">Cantidad: </span>
-                <button class="quantity-btn" (click)="decrementQuantity(item)">
+                <button
+                  class="quantity-btn"
+                  *ngIf="!isLoading"
+                  (click)="decrementQuantity(item)"
+                >
                   -
                 </button>
                 <span class="value-quantity">{{ item.quantity }}</span>
                 <button
                   class="quantity-btn"
+                  *ngIf="!isLoading"
                   (click)="incrementQuantity(item)"
                   [disabled]="item.quantity >= item.totalQuantity"
                 >
@@ -117,17 +122,19 @@
                 </button>
               </p>
               <p class="egp2">
+                <span class="boldspn">Descripción: </span>
+                <span id="dataDate">{{ item.description }} </span>
+              </p>
+              <p class="egp2">
                 <span class="boldspn">Cantidad Total: </span>
                 <span id="dataDate">{{ item.totalQuantity }} </span>
               </p>
 
-              <p class="thnkscart">
-                {{ item.description }}
-              </p>
               <a
                 class="remove-item-button"
                 style="cursor: pointer"
                 (click)="removeCartItem(i)"
+                *ngIf="!isLoading"
                 >X</a
               >
             </div>
@@ -146,17 +153,25 @@
             <span class="cartttl">Total</span
             ><span id="totalAmount">${{ totalPrice | number : "1.2-2" }}</span>
           </div>
-          <a class="addanothercart" id="cloasecart" (click)="createNewCard()">{{
-            productsCart.length === 0
-              ? "Agregar un producto"
-              : "Agregar otro producto"
-          }}</a>
+          <a
+            class="addanothercart"
+            id="cloasecart"
+            *ngIf="!isLoading"
+            (click)="createNewCard()"
+            >{{
+              productsCart.length === 0
+                ? "Agregar un producto"
+                : "Agregar otro producto"
+            }}</a
+          >
           <button
             *ngIf="productsCart.length > 0"
             (click)="purchaseProducts()"
+            [disabled]="isLoading"
             class="addtocart"
+            [ngClass]="{ 'button-loading': isLoading }"
           >
-            Pagar
+            {{ isLoading ? "Generando PDF..." : "Pagar" }}
           </button>
         </div>
       </div>
@@ -183,6 +198,7 @@
 
             <ul class="side-icons">
               <span
+                *ngIf="!isProductInCart(product)"
                 (click)="updateProduct(product)"
                 style="background-color: #fdb805"
               >

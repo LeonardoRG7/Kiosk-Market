@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit {
   totalPrice: number = 0;
   products: Product[] = [];
   productsCart: Product[] = [];
+  isLoading: boolean = false;
 
   constructor(
     private _productService: ProductsService,
@@ -100,6 +101,10 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  isProductInCart(product: Product): boolean {
+    return this.productsCart.some((item) => item.id === product.id);
+  }
+
   addCard(product: Product) {
     if (product && product.quantity > 0) {
       // Verifica que la cantidad del producto sea mayor que cero
@@ -114,13 +119,8 @@ export class HomeComponent implements OnInit {
       } else {
         // Si el producto no existe, añadirlo al carrito con cantidad 1
         const cartItem: Partial<Product> = {
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          description: product.description,
+          ...product,
           quantity: 1,
-          totalQuantity: product.quantity,
-          image: product.image,
         };
         this.productsCart.push(cartItem as Product);
       }
@@ -193,6 +193,8 @@ export class HomeComponent implements OnInit {
       ...product,
     }));
 
+    this.isLoading = true;
+
     // Actualizar la cantidad de los productos en el backend
     productsToUpdate.forEach((item) => {
       const updatedQuantity = item.totalQuantity - item.quantity;
@@ -220,7 +222,13 @@ export class HomeComponent implements OnInit {
     // Actualiza el subtotal
     this.updateTotalPrice();
 
-    this.generatePdf();
+    this._toastr.info('Generando factura, por favor espere...', 'Procesando');
+
+    // Después de 5 segundos, generar el PDF
+    setTimeout(() => {
+      this.generatePdf();
+      this.isLoading = false;
+    }, 2000);
   }
 
   generatePdf() {

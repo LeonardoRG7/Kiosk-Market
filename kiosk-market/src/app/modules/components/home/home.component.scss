@@ -284,6 +284,10 @@ header {
       margin-top: 12px;
       cursor: pointer;
     }
+
+    .button-loading {
+      opacity: 0.5;
+    }
   }
 }
 
@@ -406,8 +410,8 @@ section {
           left: 0;
           font-size: 1.2rem;
           font-weight: 600;
-          color: #2148c0;
-          text-shadow: 0 0 1.5px #2148c0;
+          color: red;
+          text-shadow: 0 0 1.5px red;
         }
 
         .side-icons {
