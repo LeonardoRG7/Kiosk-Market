@@ -108,7 +108,11 @@
                   -
                 </button>
                 <span class="value-quantity">{{ item.quantity }}</span>
-                <button class="quantity-btn" (click)="incrementQuantity(item)">
+                <button
+                  class="quantity-btn"
+                  (click)="incrementQuantity(item)"
+                  [disabled]="item.quantity >= item.totalQuantity"
+                >
                   +
                 </button>
               </p>
@@ -149,7 +153,7 @@
           }}</a>
           <button
             *ngIf="productsCart.length > 0"
-            (click)="generatePdf()"
+            (click)="purchaseProducts()"
             class="addtocart"
           >
             Pagar
@@ -172,36 +176,40 @@
     </div>
 
     <div class="product-layout">
-      <div class="product" *ngFor="let product of products">
-        <div class="img-container">
-          <img src="{{ product.image }}" alt="{{ product.name }} image" />
+      <ng-container *ngFor="let product of products">
+        <div class="product" *ngIf="product.quantity > 0">
+          <div class="img-container">
+            <img src="{{ product.image }}" alt="{{ product.name }} image" />
 
-          <ul class="side-icons">
-            <span
-              (click)="updateProduct(product)"
-              style="background-color: #fdb805"
-            >
-              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-            </span>
-            <span
-              (click)="deleteProduct(product.id)"
-              style="background-color: red"
-            >
-              <i class="fa fa-trash-o" aria-hidden="true"></i>
-            </span>
-          </ul>
+            <ul class="side-icons">
+              <span
+                (click)="updateProduct(product)"
+                style="background-color: #fdb805"
+              >
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </span>
+              <span
+                (click)="deleteProduct(product.id)"
+                style="background-color: red"
+              >
+                <i class="fa fa-trash-o" aria-hidden="true"></i>
+              </span>
+            </ul>
 
-          <span class="quantity-value">{{ product.quantity }} </span>
+            <span class="quantity-value">{{ product.quantity }} </span>
+          </div>
+          <div class="bottom d-flex align-items-center justify-content-between">
+            <p>{{ product.name }}</p>
+            <span class="price">{{ product.price | currency }} </span>
+          </div>
+          <p class="description">
+            {{ product.description }}
+          </p>
+          <button class="btn-add-cart" (click)="addCard(product)">
+            Comprar
+          </button>
         </div>
-        <div class="bottom d-flex align-items-center justify-content-between">
-          <p>{{ product.name }}</p>
-          <span class="price">{{ product.price | currency }} </span>
-        </div>
-        <p class="description">
-          {{ product.description }}
-        </p>
-        <button class="btn-add-cart" (click)="addCard(product)">Comprar</button>
-      </div>
+      </ng-container>
     </div>
   </div>
 </section>

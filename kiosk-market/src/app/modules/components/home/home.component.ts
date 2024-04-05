@@ -43,6 +43,13 @@ export class HomeComponent implements OnInit {
             'Cantidad baja'
           );
         }
+
+        if (product.quantity === 0) {
+          this._toastr.error(
+            `No hay stock en el producto ${product.name}, actualiza la cantidad `,
+            'Sin Stock'
+          );
+        }
       });
     });
   }
@@ -81,8 +88,12 @@ export class HomeComponent implements OnInit {
   deleteProduct(id: number) {
     if (id) {
       this._productService.deleteProduct(id).subscribe((res) => {
-        this.ngOnInit();
         this._toastr.success('Producto eliminado con exito!');
+
+        this.getProducts();
+        this.productsCart = this.productsCart.filter(
+          (product) => product.id !== id
+        );
       });
     } else {
       console.error('ID is undefined or null');
@@ -90,7 +101,8 @@ export class HomeComponent implements OnInit {
   }
 
   addCard(product: Product) {
-    if (product) {
+    if (product && product.quantity > 0) {
+      // Verifica que la cantidad del producto sea mayor que cero
       // Buscar si el producto ya está en el carrito
       const existingProduct = this.productsCart.find(
         (item) => item.id === product.id
@@ -108,12 +120,16 @@ export class HomeComponent implements OnInit {
           description: product.description,
           quantity: 1,
           totalQuantity: product.quantity,
+          image: product.image,
         };
         this.productsCart.push(cartItem as Product);
       }
 
       this.showCart();
       this.updateTotalPrice();
+    } else {
+      // Si la cantidad del producto es cero, mostrar un mensaje de error
+      this._toastr.error('No hay suficiente stock para este producto', 'Error');
     }
   }
 
@@ -160,10 +176,54 @@ export class HomeComponent implements OnInit {
     this._toastr.success('Sesión cerrada correctamente', 'Éxito');
   }
 
-  generatePdf() {
+  purchaseProducts() {
+    const invalidQuantity = this.productsCart.some(
+      (item) => item.quantity > item.totalQuantity
+    );
+
+    if (invalidQuantity) {
+      this._toastr.error(
+        'No puedes comprar una cantidad mayor a la disponible',
+        'Error'
+      );
+      return;
+    }
+
+    const productsToUpdate = this.productsCart.map((product) => ({
+      ...product,
+    }));
+
+    // Actualizar la cantidad de los productos en el backend
+    productsToUpdate.forEach((item) => {
+      const updatedQuantity = item.totalQuantity - item.quantity;
+      console.log(item);
+      const data: Product = {
+        name: item.name,
+        description: item.description,
+        quantity: updatedQuantity,
+        price: item.price,
+        image: item.image,
+        totalQuantity: updatedQuantity,
+      };
+
+      this._productService.updateProduct(item.id, data).subscribe(
+        (updatedProduct) => {
+          // Manejar la actualización exitosa si es necesario
+        },
+        (error) => {
+          // Manejar errores en la actualización del producto
+          console.error('Error updating product quantity:', error);
+        }
+      );
+    });
+
     // Actualiza el subtotal
     this.updateTotalPrice();
 
+    this.generatePdf();
+  }
+
+  generatePdf() {
     const subtotal = this.totalPrice;
     const iva = subtotal * 0.19;
     const totalWithIVA = subtotal + iva;
@@ -174,7 +234,7 @@ export class HomeComponent implements OnInit {
         {
           table: {
             headerRows: 1,
-            widths: ['*', '*', '*', '*'],
+            widths: ['*', 'auto', '*', '*'],
             body: [
               [
                 { text: 'Nombre', style: 'tableHeader' },
@@ -239,5 +299,10 @@ export class HomeComponent implements OnInit {
     };
 
     pdfMake.createPdf(documentDefinition).open();
+
+    this.getProducts();
+    this.productsCart = [];
+    this.hideCart();
+    this._toastr.success('Gracias por tu compra', 'Compra realizada');
   }
 }
