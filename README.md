@@ -29,6 +29,14 @@ Alternativamente, puedes acceder a la versión de producción de la aplicación 
 - Una vez que un producto se agrega al carrito de compras, no se puede editar en la página de inicio. Solo se puede editar la cantidad dentro del carrito.
 - Al completar una compra, se genera un PDF de la factura correspondiente.
 
+  ![view3](https://github.com/LeonardoRG7/Kiosk-Market/assets/100187473/30ab7f58-8093-454e-92de-983a11d21900)
+
+![view2](https://github.com/LeonardoRG7/Kiosk-Market/assets/100187473/d25a31e2-9009-41c9-aa3a-d6417a661b46)
+
+![view1](https://github.com/LeonardoRG7/Kiosk-Market/assets/100187473/84e6544f-2110-4343-8f51-d291db45f9f0)
+
+
+
 **Autor**
 Este código fue escrito con amor por: Leonardo Riascos Guerrero
 
